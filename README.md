@@ -1,7 +1,5 @@
 # baselibrary/redis [![Docker Repository on Quay.io](https://quay.io/repository/baselibrary/redis/status "Docker Repository on Quay.io")](https://quay.io/repository/baselibrary/redis)
 
-[![](http://dockeri.co/image/baselibrary/redis)](https://registry.hub.docker.com/u/baselibrary/redis/)
-
 ## Installation and Usage
 
     docker pull quay.io/baselibrary/redis:${VERSION:-latest}
