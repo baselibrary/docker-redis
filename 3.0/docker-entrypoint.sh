@@ -7,22 +7,25 @@ set -e -m
 
 # add command if needed
 if [ "${1:0:1}" = '-' ]; then
-  set -- elasticsearch "$@"
+  set -- redis-server "$@"
 fi
 
 #run command in background
-if [ "$1" = 'elasticsearch' ]; then
+if [ "$1" = 'redis-server' ]; then
   ##### pre scripts  #####
   echo "========================================================================"
   echo "initialize:"
   echo "========================================================================"
-  mkdir -p /usr/share/elasticsearch/data && chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/data
+  # set listen addresses
+  /usr/bin/ansible local -o -c local -m lineinfile  -a "dest=/etc/redis/redis.conf regexp='^(bind\s*)\S+' line='bind 0.0.0.0'"
+  /usr/bin/ansible local -o -c local -m lineinfile  -a "dest=/etc/redis/redis.conf regexp='^(daemonize\s*)\S+' line='daemonize no'"
+  /usr/bin/ansible local -o -c local -m lineinfile  -a "dest=/etc/redis/redis.conf regexp='^(logfile\s*)\S+' line='logfile /dev/stdout'"
   
   ##### run scripts  #####
   echo "========================================================================"
   echo "startup:"
   echo "========================================================================"
-  exec gosu elasticsearch "$@" &
+  exec gosu redis "$@" &
 
   ##### post scripts #####
   echo "========================================================================"
