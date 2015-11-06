@@ -1,23 +1,17 @@
-# baselibrary/redis [![Docker Repository on Quay.io](https://quay.io/repository/baselibrary/redis/status "Docker Repository on Quay.io")](https://quay.io/repository/baselibrary/redis)
+## ThoughtWorks Docker Image: redis
 
-## Installation and Usage
+[![](http://dockeri.co/image/baselibrary/redis)](https://registry.hub.docker.com/u/baselibrary/redis/)
 
-    docker pull quay.io/baselibrary/redis:${VERSION:-latest}
-
-## Available Versions (Tags)
+### Base Docker Image
 
 * `latest`: redis 3.0
-* `2.8`: redis 2.8
-* `3.0`: redis 3.0
+* `3.0`   : redis 3.0
+* `2.8`   : redis 2.8
 
-## Deployment
+### Installation
 
-To push the Docker image to Quay, run the following command:
+    docker pull baselibrary/redis
 
-    make release
+### Usage
 
-## Continuous Integration
-
-Images are built and pushed to Docker Hub on every deploy. Because Quay currently only supports build triggers where the Docker tag name exactly matches a GitHub branch/tag name, we must run the following script to synchronize all our remote branches after a merge to master:
-
-    make sync-branches
+    docker run -it --rm baselibrary/redis

@@ -3,31 +3,34 @@
 #enable job control in script
 set -e -m
 
-#run in background
-if [ "$1" = 'redis-server' ]; then
-  #####   variables  #####  
-  
+#####   variables  #####
+
+# add command if needed
+if [ "${1:0:1}" = '-' ]; then
+  set -- elasticsearch "$@"
+fi
+
+#run command in background
+if [ "$1" = 'elasticsearch' ]; then
   ##### pre scripts  #####
   echo "========================================================================"
-  echo "prepare the environment:"
+  echo "initialize:"
   echo "========================================================================"
+  mkdir -p /usr/share/elasticsearch/data && chown -R elasticsearch:elasticsearch /usr/share/elasticsearch/data
   
-  # set listen addresses
-  /usr/bin/ansible local -o -c local -m lineinfile  -a "dest=/etc/redis/redis.conf regexp='^(bind\s*)\S+' line='bind 0.0.0.0'"
-  /usr/bin/ansible local -o -c local -m lineinfile  -a "dest=/etc/redis/redis.conf regexp='^(daemonize\s*)\S+' line='daemonize no'"
-  /usr/bin/ansible local -o -c local -m lineinfile  -a "dest=/etc/redis/redis.conf regexp='^(logfile\s*)\S+' line='logfile /dev/stdout'"
-
   ##### run scripts  #####
-  exec gosu redis "$@" &
+  echo "========================================================================"
+  echo "startup:"
+  echo "========================================================================"
+  exec gosu elasticsearch "$@" &
 
   ##### post scripts #####
   echo "========================================================================"
-  echo "configure the environment:"
+  echo "configure:"
   echo "========================================================================"
   
-  #bring to foreground
+  #bring command to foreground
   fg
 else
   exec "$@"
 fi
-
