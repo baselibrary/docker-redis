@@ -3,7 +3,7 @@ MAINTAINER ShawnMa <qsma@thoughtworks.com>
 
 ## Version
 ENV REDIS_MAJOR   3.0
-ENV REDIS_VERSION 3:3.0.5-1chl1~trusty1
+ENV REDIS_VERSION 3:3.0.7-1chl1~trusty1
 
 ## Repository
 RUN \
@@ -13,7 +13,7 @@ RUN \
 ## Packages
 RUN \
   apt-get update &&\
-  apt-get install -y redis-server=3:3.0.5-1chl1~trusty1 redis-tools=3:3.0.5-1chl1~trusty1 &&\
+  apt-get install -y redis-server=3:3.0.7-1chl1~trusty1 redis-tools=3:3.0.7-1chl1~trusty1 &&\
   rm -rf /var/lib/apt/lists/*
 
 ## Scripts
@@ -24,7 +24,7 @@ EXPOSE 6379
 
 WORKDIR /var/lib/redis
 
-ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 VOLUME ["/var/lib/redis"]
 

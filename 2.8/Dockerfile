@@ -24,7 +24,7 @@ EXPOSE 6379
 
 WORKDIR /var/lib/redis
 
-ENTRYPOINT ["tini", "--", "/docker-entrypoint.sh"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 VOLUME ["/var/lib/redis"]
 
